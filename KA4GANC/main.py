@@ -18,12 +18,12 @@ import time
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--lr', type=float, default=1e-2, help='Initial learning rate.')
+parser.add_argument('--lr', type=float, default=3e-2, help='Initial learning rate.')
 parser.add_argument('--epochs', type=int, default=60,help='Number of epoch.')
 parser.add_argument('--alpha', type=float, default=0.2, help='Alpha for the leaky_relu.')
 parser.add_argument('--hidden_dim', type=int, default=[128,64,32], help='The dimension of hidden layer')
-parser.add_argument('--output_dim', type=int, default=64, help='The dimension of latent layer')
-parser.add_argument('--batch_size', type=int, default=512, help='The size of each batch')
+parser.add_argument('--output_dim', type=int, default=63127, help='The dimension of latent layer')
+parser.add_argument('--batch_size', type=int, default=248, help='The size of each batch')
 parser.add_argument('--loop', type=bool, default=False, help='whether to add self-loop in adjacent matrix')
 parser.add_argument('--seed', type=int, default=8, help='Random seed')
 
@@ -132,9 +132,6 @@ for epoch in range(args.epochs):
         train_y = train_y.to(device).view(-1, 1)
         pred = model(data_feature, adj, train_x)
         pred = torch.sigmoid(pred)
-        loss_BCE = F.binary_cross_entropy(pred, train_y)
-
-        loss_BCE.backward()
         optimizer.step()
         scheduler.step()
 
